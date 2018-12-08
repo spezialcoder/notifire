@@ -1,5 +1,4 @@
 import sys,sqlite3,useraccount,os
-print len(sys.argv)
 if len(sys.argv) == 3 and sys.argv[1] == "--delete":
 	user = sys.argv[2]
 	if os.path.isfile("user/{0}".format(user)):
