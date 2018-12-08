@@ -93,20 +93,38 @@ def notify(message,user):
 		client.send(user)
 
 def session(c,a):
+	global duser
 	session_run = True
 	servern = config_values["server_name"]
 	c.send(servern)
 	while session_run:
-		data = c.recv(1024).strip()
-		if data == "notifire close connection":
+		try:
+			data = c.recv(1024).strip()
+			if data == "notifire close connection":
+				session_run = False
+			elif data.startswith("send"):
+				message = data.split("send ")[1]
+				from_ = cadmin[c]
+				notify(message,from_)
+				c.send("\n\x1b[33m[+]Send Complete\x1b[39m")
+			elif data.startswith("ban"):
+				user = data.split("ban ")[1]
+				duser.append(user)
+				c.send("User banned")
+			elif data.startswith("unban"):
+				user = data.split("unban ")[1]
+				if user in duser:
+					duser.append(user)
+					c.send("User unbanned")
+				else:
+					c.send("User not exist")
+			elif data.lower() == "help":
+				c.send("\nCommand                     Description\n------------------------------------------\nsend                    Send notify\nban                          Ban user\nunban                           unban user\nexit                    close session\n")
+				
+			else:
+				c.send("Command not found")
+		except:
 			session_run = False
-		elif data.startswith("send"):
-			message = data.split("send ")[1]
-			from_ = cadmin[c]
-			notify(message,from_)
-			c.send("\n\x1b[33m[+]Send Complete\x1b[39m")
-		else:
-			c.send("Command not found")
 		
 			
 #####################################################Main-Loop########################################################
@@ -161,8 +179,11 @@ while True:
 					
 		elif client_secret in secrets.keys():
 			name = secrets[client_secret]
-			connected[c] = name
-			c.send("notifire request accept OK")
+			if not name in duser:
+				connected[c] = name
+				c.send("notifire request accept OK")
+			else:
+				c.send("notifire request accept DENIED")
 		else:
 			c.send("notifire request accept DENIED")
 	except:
