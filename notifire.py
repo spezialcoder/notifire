@@ -112,7 +112,7 @@ log_file = open("log/access.log","w")
 while True:
 	c,a = sock.accept()
 	c.send("notifire server OK")
-	log_file.write("\n"+str(datetime.datetime.now())+"    {0}      Connected to server".format(a[0])
+	log_file.write("\n"+str(datetime.datetime.now())+"    {0}      Connected to server".format(a[0]))
 	log_file.flush()
 	try:
 		client_secret = c.recv(1024).strip()
