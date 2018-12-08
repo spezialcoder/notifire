@@ -36,11 +36,19 @@ if not osession:
 		sys.exit(0)
 	nheader = notify.notify("notifire")
 	while True:
-		len_data = sock.recv(4)
-		len_str = struct.unpack("!i",len_data)[0]
-		message = sock.recv(int(len_str)).strip()
-		user = sock.recv(1024).strip()
-		nheader.send(user,message)
+		try:
+			len_data = sock.recv(4)
+			len_str = struct.unpack("!i",len_data)[0]
+			message = sock.recv(int(len_str)).strip()
+			user = sock.recv(1024).strip()
+			nheader.send(user,message)
+		except:
+			try:
+				sock.close()
+				sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+				sock.connect((config_values["ip"],int(config_values["port"])))
+			except:
+				pass
 else:
 	sock.send("notifire open session")
 	usernam = raw_input("User: ")
