@@ -87,10 +87,13 @@ cadmin = {}
 def notify(message,user):
 	len_str = struct.pack("!i",len(message))
 	for client in connected.keys():
-		client.send(len_str)
-		time.sleep(0.1)
-		client.send(message)
-		client.send(user)
+		if connected[client] in duser:		
+			pass
+		else:
+			client.send(len_str)
+			time.sleep(0.1)
+			client.send(message)
+			client.send(user)
 
 def session(c,a):
 	global duser
