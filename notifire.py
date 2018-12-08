@@ -19,7 +19,6 @@ def write_fail(reason):
 if os.path.isfile("notifire.conf"):
 	try:
 		config_values = config_parse.parse("notifire.conf").run()
-		print config_values
 		if not config_values["denied_user"].lower() == "none":
 			duser = eval(config_values["denied_user"])
 		else:
