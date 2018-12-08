@@ -100,11 +100,13 @@ def session(c,a):
 		data = c.recv(1024).strip()
 		if data == "notifire close connection":
 			session_run = False
-		if data.startswith("send"):
+		elif data.startswith("send"):
 			message = data.split("send ")[1]
 			from_ = cadmin[c]
 			notify(message,from_)
 			c.send("\n\x1b[33m[+]Send Complete\x1b[39m")
+		else:
+			c.send("Command not found")
 		
 			
 #####################################################Main-Loop########################################################
