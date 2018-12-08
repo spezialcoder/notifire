@@ -1,4 +1,4 @@
-#!/usr/lib/python
+#!/usr/bin/python
 #Developer: developermind405@gmail.com
 #Denied login: notifire request accept DENIED
 #Accept login: notifire request accept OK
