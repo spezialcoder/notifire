@@ -32,6 +32,7 @@ elif len(sys.argv) == 4:
 			file.write(new_user.convert())
 			file.close()
 		print "Successful Created"
+		print "Secret:",new_user.secret
 	else:
 		pass
 else:
