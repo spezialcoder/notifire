@@ -117,7 +117,7 @@ def session(c,a):
 			elif data.startswith("unban"):
 				user = data.split("unban ")[1]
 				if user in duser:
-					duser.append(user)
+					duser.remove(user)
 					c.send("User unbanned")
 				else:
 					c.send("User not exist")
