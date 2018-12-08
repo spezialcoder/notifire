@@ -112,6 +112,8 @@ log_file = open("log/access.log","w")
 while True:
 	c,a = sock.accept()
 	c.send("notifire server OK")
+	log_file.write("\n"+str(datetime.datetime.now())+"    {0}      Connected to server".format(a[0])
+	log_file.flush()
 	try:
 		client_secret = c.recv(1024).strip()
 		if client_secret == "notifire open session":
@@ -157,8 +159,6 @@ while True:
 					
 		elif client_secret in secrets.keys():
 			name = secrets[client_secret]
-			log_file.write("\n"+str(datetime.datetime.now())+"    {0}    {1}    Connected to server".format(a[0],name))
-			log_file.flush()
 			connected[c] = name
 			c.send("notifire request accept OK")
 		else:
