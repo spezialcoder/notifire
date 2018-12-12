@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/lib/python
 #Developer: developermind405@gmail.com
 #Denied login: notifire request accept DENIED
 #Accept login: notifire request accept OK
@@ -8,6 +8,13 @@
 #Denied Session: notifire request session DENIED
 #Close session: notifire close connection
 import socket,sys,os,config_parse,hashlib,sqlite3,datetime,threading,useraccount,struct,time
+if len(sys.argv) > 1:
+	para = sys.argv[1]
+	if para == "--update":
+		import update
+		sys.exit(0)
+	else:
+		pass
 require_config_tags = ["port","server_name","denied_user","listen","ip"]
 connected = {}
 ################################################Functions####################################################
